@@ -1,0 +1,13 @@
+/Temp/
+/Logs/
+/Build/
+Library/
+/obj/
+/Assets/Plugins/Editor*
+
+*.csproj
+*.unityproj
+*.sln
+*.userprefs
+*.pidb
+*.DS_Store
