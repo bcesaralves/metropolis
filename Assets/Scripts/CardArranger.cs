@@ -74,10 +74,6 @@ public class CardArranger : MonoBehaviour
 
                 card.GetComponent<Transform>().localScale = new Vector3(cardWidth, cardHeight, 1);
                 card.GetComponent<Transform>().localPosition = position;
-                if(type == ArrangeType.Container)
-                {
-                    card.GetComponent<Transform>().parent = GetComponent<Transform>();
-                }
                 currentX += maxCardWidth + 2 * horizontalMargin;
             }
             currentY += maxCardHeight + 2 * verticalMargin;
