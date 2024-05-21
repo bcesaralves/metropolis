@@ -4,18 +4,11 @@ using UnityEngine;
 public class CardArranger : MonoBehaviour
 {
     public GameObject cardPrefab; // The card prefab to instantiate
-    public int rows; // Number of rows
-    public int columns; // Number of columns
     public float horizontalMargin; // Horizontal margin between cards
     public float verticalMargin; // Vertical margin between cards
     public enum ArrangeType { Screen, Container}; 
-    ArrangeType arrangeType;
-    void Start()
-    {
-        Arrange(ArrangeType.Screen);
-    }
 
-    public void Arrange(ArrangeType type)
+    public void Arrange(ArrangeType type, int rows, int columns)
     {
         if (cardPrefab == null)
         {

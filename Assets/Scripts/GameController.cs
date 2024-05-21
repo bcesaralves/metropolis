@@ -4,10 +4,11 @@ using UnityEngine.SceneManagement;
 public class GameController : MonoBehaviour
 {
     public static GameController instance = null;
+    public CardArranger.ArrangeType arrangeType;
     public enum GameState { MainMenu, Playing, GameOver };
     public GameState currentState = GameState.MainMenu;
-
     public int score = 0;
+    private LevelParameters levelParameters;
 
     void Awake()
     {
@@ -32,6 +33,10 @@ public class GameController : MonoBehaviour
     {
         currentState = GameState.Playing;
         score = 0;
+        levelParameters = new LevelParameters();
+        levelParameters.horizontalNumberOfCards = 5;
+        levelParameters.verticalNumberOfCards = 3;
+        levelParameters.type = arrangeType;
         SceneManager.LoadScene("Game");
     }
 
@@ -53,5 +58,10 @@ public class GameController : MonoBehaviour
         {
             score += points;
         }
+    }
+
+    public LevelParameters GetLevelParameters()
+    {
+        return levelParameters;
     }
 }
