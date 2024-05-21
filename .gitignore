@@ -11,3 +11,4 @@ Library/
 *.userprefs
 *.pidb
 *.DS_Store
+.vs
