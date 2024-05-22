@@ -88,7 +88,7 @@ public class LevelController : MonoBehaviour
         }
         if (unrevealedCards == 0)
         {
-            GameController.instance.LevelFinished();
+            GameController.instance.LevelFinished(0);
         }
     }
 }

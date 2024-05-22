@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
@@ -9,10 +10,11 @@ public class GameController : MonoBehaviour
     public CardArranger.ArrangeType arrangeType;
     public enum GameState { MainMenu, Playing, GameOver };
     public GameState currentState = GameState.MainMenu;
-    public int score = 0;
     public List<LevelParameters> levels;
     private string saveFilePath;
     private GameProgress progress;
+    public Action<int> OnScoreChanged;
+    public Action<int> OnLevelChanged;
 
     void Awake()
     {
@@ -74,7 +76,6 @@ public class GameController : MonoBehaviour
     public void StartLevel()
     {
         currentState = GameState.Playing;
-        score = 0;
         SceneManager.LoadScene("Level");
     }
 
@@ -90,27 +91,35 @@ public class GameController : MonoBehaviour
         SceneManager.LoadScene("MainMenu");
     }
 
-    public void LevelFinished()
+    public void LevelFinished(int levelScore)
     {
-        if(progress.level < levels.Count)
+        GameProgress progressChange = new GameProgress { score = levelScore };
+        if (progress.level < levels.Count)
         {
-            progress.level++;
+            progressChange.level = 1;
         }
+        UpdateProgress(progressChange);
         SaveGame();
         currentState = GameState.MainMenu;
         SceneManager.LoadScene("MainMenu");
     }
 
-    public void AddScore(int points)
-    {
-        if (currentState == GameState.Playing)
-        {
-            score += points;
-        }
-    }
-
     public LevelParameters GetLevelParameters()
     {
         return levels[progress.level - 1];
+    }
+
+    public void UpdateProgress(GameProgress progressChange)
+    {
+        if(progressChange.level > 0)
+        {
+            progress.level += progressChange.level;
+            OnLevelChanged?.Invoke(progress.level);
+        }
+        if (progressChange.score > 0)
+        {
+            progress.score += progressChange.score;
+            OnScoreChanged?.Invoke(progress.level);
+        }
     }
 }
