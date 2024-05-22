@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class LevelController : MonoBehaviour
@@ -6,6 +7,7 @@ public class LevelController : MonoBehaviour
     public CardArranger arranger;
     // Example variable to hold level parameters received from GameController
     private LevelParameters levelParams;
+    private Queue<Card> selectedCards = new Queue<Card>();
 
     void Awake()
     {
@@ -45,8 +47,33 @@ public class LevelController : MonoBehaviour
 
     }
 
-    public void HandleCardReveal(int cardID)
+    public void HandleCardReveal(Card card)
     {
-        print(cardID);
+        print(card.cardID);
+        selectedCards.Enqueue(card);
+        ProcessQueue();
+    }
+
+    private void ProcessQueue()
+    {
+        if(selectedCards.Count >= 2)
+        {
+            Card firstCard = selectedCards.Dequeue();
+            Card secondCard = selectedCards.Dequeue();
+
+            if(firstCard.cardID == secondCard.cardID)
+            {
+                //match
+                CheckEndLevel();
+            } else
+            {
+                firstCard.Hide();
+                secondCard.Hide();
+            }
+        }
+    }
+    private void CheckEndLevel()
+    {
+
     }
 }
