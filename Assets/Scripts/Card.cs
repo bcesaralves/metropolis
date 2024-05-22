@@ -26,20 +26,6 @@ public class Card : MonoBehaviour
         GetComponent<ClickableObject>().OnClick += HandleClick;
     }
 
-    private void Update()
-    {
-        // Check for Spacebar key press
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            if (currentState == CardState.Hidden)
-            {
-                Reveal();
-            }
-            else if (currentState == CardState.Revealed)
-            {
-                Hide();
-            }
-        }
     }
 
     public void Reveal()
