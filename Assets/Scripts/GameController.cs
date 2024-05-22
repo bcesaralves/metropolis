@@ -34,8 +34,8 @@ public class GameController : MonoBehaviour
         currentState = GameState.Playing;
         score = 0;
         levelParameters = new LevelParameters();
-        levelParameters.horizontalNumberOfCards = 6;
-        levelParameters.verticalNumberOfCards = 4;
+        levelParameters.horizontalNumberOfCards = 2;
+        levelParameters.verticalNumberOfCards = 2;
         levelParameters.type = arrangeType;
         SceneManager.LoadScene("Game");
     }
@@ -47,6 +47,12 @@ public class GameController : MonoBehaviour
     }
 
     public void RestartGame()
+    {
+        currentState = GameState.MainMenu;
+        SceneManager.LoadScene("MainMenu");
+    }
+
+    public void LevelFinished()
     {
         currentState = GameState.MainMenu;
         SceneManager.LoadScene("MainMenu");

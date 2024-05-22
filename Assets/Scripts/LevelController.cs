@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -8,6 +9,7 @@ public class LevelController : MonoBehaviour
     // Example variable to hold level parameters received from GameController
     private LevelParameters levelParams;
     private Queue<Card> selectedCards = new Queue<Card>();
+    private int unrevealedCards;
 
     void Awake()
     {
@@ -41,7 +43,12 @@ public class LevelController : MonoBehaviour
             levelParams.verticalNumberOfCards = 2;
             levelParams.type = CardArranger.ArrangeType.Screen;
         }
-        
+        unrevealedCards = levelParams.horizontalNumberOfCards * levelParams.verticalNumberOfCards;
+        if (unrevealedCards % 2 != 0)
+        {
+            Debug.LogError("Number of cards must be even");
+            return;
+        }
         
         arranger.Arrange(levelParams.type,levelParams.verticalNumberOfCards,levelParams.horizontalNumberOfCards);
 
@@ -64,6 +71,7 @@ public class LevelController : MonoBehaviour
             if(firstCard.cardID == secondCard.cardID)
             {
                 //match
+                unrevealedCards -= 2;
                 CheckEndLevel();
             } else
             {
@@ -74,6 +82,13 @@ public class LevelController : MonoBehaviour
     }
     private void CheckEndLevel()
     {
-
+        if(unrevealedCards < 0)
+        {
+            Debug.LogError("number of matched cards exceeded");
+        }
+        if (unrevealedCards == 0)
+        {
+            GameController.instance.LevelFinished();
+        }
     }
 }
