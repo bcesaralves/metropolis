@@ -34,8 +34,8 @@ public class GameController : MonoBehaviour
         currentState = GameState.Playing;
         score = 0;
         levelParameters = new LevelParameters();
-        levelParameters.horizontalNumberOfCards = 5;
-        levelParameters.verticalNumberOfCards = 3;
+        levelParameters.horizontalNumberOfCards = 6;
+        levelParameters.verticalNumberOfCards = 4;
         levelParameters.type = arrangeType;
         SceneManager.LoadScene("Game");
     }

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 
@@ -11,9 +12,12 @@ public class Card : MonoBehaviour
         Hiding
     }
 
+    public Action<int> OnRevealed;
+
     public float revealDuration = 0.5f; // Duration of the reveal animation in seconds
     public float hideDuration = 0.5f;   // Duration of the hide animation in seconds
 
+    private int cardID = -1;
     private CardState currentState = CardState.Hidden;
     private Quaternion hiddenRotation = Quaternion.Euler(0f, 180f, 0f);
     private Quaternion revealedRotation = Quaternion.Euler(0f, 0f, 0f);
@@ -26,6 +30,9 @@ public class Card : MonoBehaviour
         GetComponent<ClickableObject>().OnClick += HandleClick;
     }
 
+    public void SetCardID(int cardID)
+    {
+        this.cardID = cardID;
     }
 
     public void Reveal()
@@ -64,6 +71,7 @@ public class Card : MonoBehaviour
         if (targetRotation == revealedRotation)
         {
             currentState = CardState.Revealed;
+            OnRevealed?.Invoke(cardID);
         }
         else if (targetRotation == hiddenRotation)
         {

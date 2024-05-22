@@ -44,4 +44,9 @@ public class LevelController : MonoBehaviour
         arranger.Arrange(levelParams.type,levelParams.verticalNumberOfCards,levelParams.horizontalNumberOfCards);
 
     }
+
+    public void HandleCardReveal(int cardID)
+    {
+        print(cardID);
+    }
 }

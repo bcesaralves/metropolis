@@ -16,6 +16,20 @@ public class CardArranger : MonoBehaviour
             return;
         }
 
+        //TODO: check if is even
+
+        List<int> cardsIDs = new List<int>();
+        for (int i = 1; i <= rows * columns / 2; i++)
+        {
+            cardsIDs.Add(i);
+        }
+        for (int i = 1; i <= rows * columns / 2; i++)
+        {
+            cardsIDs.Add(i);
+        }
+        Shuffle(cardsIDs);
+
+
         float containerWidth;
         float containerHeight;
 
@@ -63,6 +77,7 @@ public class CardArranger : MonoBehaviour
         // Instantiate and position the cards
 
         float currentY = 2 * verticalMargin - containerHeight / 2 + maxCardHeight / 2;
+        int cardIndex = 0;
         for (int i = 0; i < rows; i++)
         {
             float currentX = 2 * horizontalMargin - containerWidth / 2 + maxCardWidth / 2;
@@ -74,9 +89,22 @@ public class CardArranger : MonoBehaviour
 
                 card.GetComponent<Transform>().localScale = new Vector3(cardWidth, cardHeight, 1);
                 card.GetComponent<Transform>().localPosition = position;
+                card.GetComponent<Card>().OnRevealed += LevelController.instance.HandleCardReveal;
+                card.GetComponent<Card>().SetCardID(cardsIDs[cardIndex]);
+                cardIndex++;
                 currentX += maxCardWidth + 2 * horizontalMargin;
             }
             currentY += maxCardHeight + 2 * verticalMargin;
+        }
+    }
+    private void Shuffle(List<int> list)
+    {
+        for(int i = 0; i < list.Count; i++)
+        {
+            int temp = list[i];
+            int randomIndex = Random.Range(i, list.Count);
+            list[i] = list[randomIndex];
+            list[randomIndex] = temp;
         }
     }
 }
