@@ -11,6 +11,8 @@ GameObject:
   - component: {fileID: 65275816806406649}
   - component: {fileID: 65275816806406650}
   - component: {fileID: 2063747797}
+  - component: {fileID: 1305957942}
+  - component: {fileID: 5703126869633048223}
   m_Layer: 0
   m_Name: Card
   m_TagString: Untagged
@@ -100,7 +102,31 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   revealDuration: 1
   hideDuration: 0.5
-  rotationSpeed: 180
+--- !u!114 &1305957942
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 65275816806406648}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bf9d2da59575a4a60990cbf38569cb8d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!65 &5703126869633048223
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 65275816806406648}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 0.2}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1863699621905129618
 GameObject:
   m_ObjectHideFlags: 0

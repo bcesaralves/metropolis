@@ -15,15 +15,15 @@ public class Card : MonoBehaviour
     public float hideDuration = 0.5f;   // Duration of the hide animation in seconds
 
     private CardState currentState = CardState.Hidden;
-    private SpriteRenderer spriteRenderer;
     private Quaternion hiddenRotation = Quaternion.Euler(0f, 180f, 0f);
     private Quaternion revealedRotation = Quaternion.Euler(0f, 0f, 0f);
 
     private void Start()
     {
-        spriteRenderer = GetComponent<SpriteRenderer>();
         currentState = CardState.Hidden;
         transform.rotation = hiddenRotation;
+
+        GetComponent<ClickableObject>().OnClick += HandleClick;
     }
 
     private void Update()
@@ -83,5 +83,10 @@ public class Card : MonoBehaviour
         {
             currentState = CardState.Hidden;
         }
+    }
+
+    private void HandleClick()
+    {
+        Reveal();
     }
 }
