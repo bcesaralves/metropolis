@@ -56,6 +56,12 @@ public class GameController : MonoBehaviour
         Debug.Log("Game saved successfully.");
     }
 
+    public void ResetGame()
+    {
+        InitializeFreshGame();
+        SaveGame();
+    }
+
     void InitializeFreshGame()
     {
         progress = new GameProgress
