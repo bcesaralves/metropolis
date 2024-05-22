@@ -29,7 +29,18 @@ public class LevelController : MonoBehaviour
         }
 
         // Retrieve level parameters from GameController
-        levelParams = GameController.instance.GetLevelParameters();
+        if(GameController.instance)
+        {
+            levelParams = GameController.instance.GetLevelParameters();
+        } else
+        {
+            levelParams = new LevelParameters();
+            levelParams.horizontalNumberOfCards = 4;
+            levelParams.verticalNumberOfCards = 2;
+            levelParams.type = CardArranger.ArrangeType.Screen;
+        }
+        
+        
         arranger.Arrange(levelParams.type,levelParams.verticalNumberOfCards,levelParams.horizontalNumberOfCards);
 
     }
