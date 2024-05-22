@@ -4,6 +4,7 @@ using UnityEngine;
 public class LevelUIController : MonoBehaviour
 {
     public TMP_Text scoreText;
+    public TMP_Text comboScoreText;
     public TMP_Text levelText;
 
     private void Awake()
@@ -12,6 +13,7 @@ public class LevelUIController : MonoBehaviour
         if (levelController != null)
         {
             levelController.OnScoreChanged += OnScoreChanged;
+            levelController.OnComboScoreChanged += OnComboScoreChanged;
         }
     }
 
@@ -32,6 +34,14 @@ public class LevelUIController : MonoBehaviour
         if (scoreText)
         {
             scoreText.text = "Level Score " + score.ToString();
+        }
+    }
+
+    public void OnComboScoreChanged(int combo)
+    {
+        if (comboScoreText)
+        {
+            comboScoreText.text = "Combo Score " + combo.ToString();
         }
     }
 

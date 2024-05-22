@@ -6,12 +6,18 @@ public class LevelController : MonoBehaviour
 {
     public static LevelController instance = null;
     public CardArranger arranger;
+    public int scorePerMatch;
+    public int scorePerCombo;
+    public int sequenceForCombo;
     // Example variable to hold level parameters received from GameController
     private LevelParameters levelParams;
     private Queue<Card> selectedCards = new Queue<Card>();
     private int unrevealedCards;
     public Action<int> OnScoreChanged;
+    public Action<int> OnComboScoreChanged;
     private int score;
+    private int combo;
+    private int sequence;
 
     void Awake()
     {
@@ -34,7 +40,7 @@ public class LevelController : MonoBehaviour
             return;
         }
 
-        SetScore(0);
+        SetScore(0,0);
 
         // Retrieve level parameters from GameController
         if (GameController.instance)
@@ -72,16 +78,20 @@ public class LevelController : MonoBehaviour
     }
 
 
-    public void SetScore(int score)
+    public void SetScore(int score, int combo)
     {
         this.score = score;
+        this.combo = combo;
         OnScoreChanged?.Invoke(score);
+        OnComboScoreChanged?.Invoke(combo);
     }
 
-    public void UpdateScore(int scoreChange)
+    public void UpdateScore(int scoreChange, int comboChange)
     {
         score += scoreChange;
+        combo += comboChange;
         OnScoreChanged?.Invoke(score);
+        OnComboScoreChanged?.Invoke(combo);
     }
 
     private void ProcessQueue()
@@ -93,16 +103,38 @@ public class LevelController : MonoBehaviour
 
             if(firstCard.cardID == secondCard.cardID)
             {
-                UpdateScore(10);
-                unrevealedCards -= 2;
-                CheckEndLevel();
+                Match();
             } else
             {
+                sequence = 0;
                 firstCard.Hide();
                 secondCard.Hide();
             }
         }
     }
+
+    private void Match()
+    {
+        sequence++;
+        if (sequence >= sequenceForCombo)
+        {
+            UpdateScore(scorePerMatch, scorePerCombo);
+            sequence = 0;
+        }
+        else
+        {
+            UpdateScore(scorePerMatch, 0);
+        }
+        unrevealedCards -= 2;
+        CheckEndLevel();
+    }
+
+    private void Fail()
+    {
+
+    }
+
+
     private void CheckEndLevel()
     {
         if(unrevealedCards < 0)
@@ -111,7 +143,7 @@ public class LevelController : MonoBehaviour
         }
         if (unrevealedCards == 0)
         {
-            GameController.instance.LevelFinished(score);
+            GameController.instance.LevelFinished(score + combo);
         }
     }
 }
