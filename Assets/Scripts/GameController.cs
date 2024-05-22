@@ -29,7 +29,7 @@ public class GameController : MonoBehaviour
 
     }
 
-    public void StartGame()
+    public void StartLevel()
     {
         currentState = GameState.Playing;
         score = 0;
