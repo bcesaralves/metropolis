@@ -22,12 +22,15 @@ public class Card : MonoBehaviour
     private Quaternion hiddenRotation = Quaternion.Euler(0f, 180f, 0f);
     private Quaternion revealedRotation = Quaternion.Euler(0f, 0f, 0f);
 
+    private void Awake()
+    {
+        GetComponent<ClickableObject>().OnClick += HandleClick;
+    }
+
     private void Start()
     {
         currentState = CardState.Hidden;
         transform.rotation = hiddenRotation;
-
-        GetComponent<ClickableObject>().OnClick += HandleClick;
     }
 
     public void SetCardID(int cardID)
@@ -82,5 +85,10 @@ public class Card : MonoBehaviour
     private void HandleClick()
     {
         Reveal();
+    }
+
+    void OnDestroy()
+    {
+        GetComponent<ClickableObject>().OnClick -= HandleClick;
     }
 }

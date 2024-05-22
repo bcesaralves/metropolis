@@ -6,7 +6,13 @@ public class CardArranger : MonoBehaviour
     public GameObject cardPrefab; // The card prefab to instantiate
     public float horizontalMargin; // Horizontal margin between cards
     public float verticalMargin; // Vertical margin between cards
-    public enum ArrangeType { Screen, Container}; 
+    public enum ArrangeType { Screen, Container};
+    private List<Card> cards;
+
+    private void Awake()
+    {
+        cards = new List<Card>();
+    }
 
     public void Arrange(ArrangeType type, int rows, int columns)
     {
@@ -86,11 +92,11 @@ public class CardArranger : MonoBehaviour
                 Vector3 position = new Vector3(currentX,currentY,0);
 
                 GameObject card = Instantiate(cardPrefab, transform.parent);
-
                 card.GetComponent<Transform>().localScale = new Vector3(cardWidth, cardHeight, 1);
                 card.GetComponent<Transform>().localPosition = position;
                 card.GetComponent<Card>().OnRevealed += LevelController.instance.HandleCardReveal;
                 card.GetComponent<Card>().SetCardID(cardsIDs[cardIndex]);
+                cards.Add(card.GetComponent<Card>());
                 cardIndex++;
                 currentX += maxCardWidth + 2 * horizontalMargin;
             }
@@ -105,6 +111,14 @@ public class CardArranger : MonoBehaviour
             int randomIndex = Random.Range(i, list.Count);
             list[i] = list[randomIndex];
             list[randomIndex] = temp;
+        }
+    }
+
+    void OnDestroy()
+    {
+        foreach(Card card in cards)
+        {
+            card.OnRevealed -= LevelController.instance.HandleCardReveal;
         }
     }
 }

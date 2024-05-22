@@ -21,12 +21,12 @@ public class GameController : MonoBehaviour
         if (instance == null)
         {
             instance = this;
+            SceneManager.sceneLoaded += OnSceneLoaded;
         }
         else if (instance != this)
         {
             Destroy(gameObject);
         }
-
         DontDestroyOnLoad(gameObject);
     }
 
@@ -41,7 +41,7 @@ public class GameController : MonoBehaviour
         if (File.Exists(saveFilePath))
         {
             string json = File.ReadAllText(saveFilePath);
-            progress = JsonUtility.FromJson<GameProgress>(json);
+            SetProgress(JsonUtility.FromJson<GameProgress>(json));
             Debug.Log("Game loaded successfully.");
         }
         else
@@ -66,11 +66,12 @@ public class GameController : MonoBehaviour
 
     void InitializeFreshGame()
     {
-        progress = new GameProgress
+        GameProgress progress = new GameProgress
         {
             level = 1,
             score = 0
         };
+        SetProgress(progress);
     }
 
     public void StartLevel()
@@ -109,6 +110,13 @@ public class GameController : MonoBehaviour
         return levels[progress.level - 1];
     }
 
+    private void SetProgress(GameProgress progress)
+    {
+        this.progress = progress;
+        OnLevelChanged?.Invoke(progress.level);
+        OnScoreChanged?.Invoke(progress.score);
+    }
+
     public void UpdateProgress(GameProgress progressChange)
     {
         if(progressChange.level > 0)
@@ -119,7 +127,22 @@ public class GameController : MonoBehaviour
         if (progressChange.score > 0)
         {
             progress.score += progressChange.score;
-            OnScoreChanged?.Invoke(progress.level);
+            OnScoreChanged?.Invoke(progress.score);
         }
+    }
+
+    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        if(progress != null)
+        {
+            OnLevelChanged?.Invoke(progress.level);
+            OnScoreChanged?.Invoke(progress.score);
+        }
+        
+    }
+
+    void OnDestroy()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 }
