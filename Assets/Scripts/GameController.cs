@@ -69,7 +69,7 @@ public class GameController : MonoBehaviour
     {
         currentState = GameState.Playing;
         score = 0;
-        SceneManager.LoadScene("Game");
+        SceneManager.LoadScene("Level");
     }
 
     public void GameOver()
