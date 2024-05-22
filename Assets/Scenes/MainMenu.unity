@@ -843,7 +843,7 @@ RectTransform:
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: -20, y: -20}
-  m_SizeDelta: {x: 200, y: 50}
+  m_SizeDelta: {x: 1000, y: 50}
   m_Pivot: {x: 1, y: 1}
 --- !u!114 &1056774251
 MonoBehaviour:
@@ -1058,13 +1058,16 @@ MonoBehaviour:
   arrangeType: 0
   currentState: 0
   levels:
-  - horizontalNumberOfCards: 2
+  - level: 1
+    horizontalNumberOfCards: 2
     verticalNumberOfCards: 2
     type: 0
-  - horizontalNumberOfCards: 4
+  - level: 2
+    horizontalNumberOfCards: 4
     verticalNumberOfCards: 3
     type: 0
-  - horizontalNumberOfCards: 6
+  - level: 3
+    horizontalNumberOfCards: 6
     verticalNumberOfCards: 4
     type: 0
 --- !u!4 &1670731794
@@ -1186,7 +1189,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 20, y: -20}
-  m_SizeDelta: {x: 200, y: 50}
+  m_SizeDelta: {x: 1000, y: 50}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1866942160
 MonoBehaviour:

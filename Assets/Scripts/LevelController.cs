@@ -10,6 +10,8 @@ public class LevelController : MonoBehaviour
     private LevelParameters levelParams;
     private Queue<Card> selectedCards = new Queue<Card>();
     private int unrevealedCards;
+    public Action<int> OnScoreChanged;
+    private int score;
 
     void Awake()
     {
@@ -32,13 +34,16 @@ public class LevelController : MonoBehaviour
             return;
         }
 
+        SetScore(0);
+
         // Retrieve level parameters from GameController
-        if(GameController.instance)
+        if (GameController.instance)
         {
             levelParams = GameController.instance.GetLevelParameters();
         } else
         {
             levelParams = new LevelParameters();
+            levelParams.level = 1;
             levelParams.horizontalNumberOfCards = 4;
             levelParams.verticalNumberOfCards = 2;
             levelParams.type = CardArranger.ArrangeType.Screen;
@@ -54,11 +59,29 @@ public class LevelController : MonoBehaviour
 
     }
 
+    public int GetLevel()
+    {
+        return levelParams.level;
+    }
+
     public void HandleCardReveal(Card card)
     {
         print(card.cardID);
         selectedCards.Enqueue(card);
         ProcessQueue();
+    }
+
+
+    public void SetScore(int score)
+    {
+        this.score = score;
+        OnScoreChanged?.Invoke(score);
+    }
+
+    public void UpdateScore(int scoreChange)
+    {
+        score += scoreChange;
+        OnScoreChanged?.Invoke(score);
     }
 
     private void ProcessQueue()
@@ -70,7 +93,7 @@ public class LevelController : MonoBehaviour
 
             if(firstCard.cardID == secondCard.cardID)
             {
-                //match
+                UpdateScore(10);
                 unrevealedCards -= 2;
                 CheckEndLevel();
             } else
@@ -88,7 +111,7 @@ public class LevelController : MonoBehaviour
         }
         if (unrevealedCards == 0)
         {
-            GameController.instance.LevelFinished(0);
+            GameController.instance.LevelFinished(score);
         }
     }
 }

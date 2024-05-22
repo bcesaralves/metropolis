@@ -1,7 +1,7 @@
 using TMPro;
 using UnityEngine;
 
-public class UIController : MonoBehaviour
+public class GameUIController : MonoBehaviour
 {
     public TMP_Text scoreText;
     public TMP_Text levelText;
@@ -28,15 +28,15 @@ public class UIController : MonoBehaviour
     {
         if (levelText)
         {
-            levelText.text = "Level " + level.ToString();
+            levelText.text = "Next Level " + level.ToString();
         }
     }
 
     void OnDestroy()
     {
-        GameController gameController = GameController.instance.GetComponent<GameController>();
-        if (gameController != null)
+        if(GameController.instance)
         {
+            GameController gameController = GameController.instance.GetComponent<GameController>();
             gameController.OnScoreChanged -= OnScoreChanged;
             gameController.OnLevelChanged -= OnLevelChanged;
         }
