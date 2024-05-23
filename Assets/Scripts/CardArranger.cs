@@ -34,20 +34,26 @@ public class CardArranger : MonoBehaviour
 
         float containerWidth;
         float containerHeight;
+        float containerX;
+        float containerY;
 
         switch (type)
         {
             case ArrangeType.Screen:
                 containerWidth = 1 / (Camera.main.WorldToViewportPoint(new Vector3(1, 1, 0)).x - 0.5f);
                 containerHeight = 1 / (Camera.main.WorldToViewportPoint(new Vector3(1, 1, 0)).y - 0.5f);
+                containerX = containerY = 0;
                 break;
             case ArrangeType.Container:
                 containerWidth = GetComponent<Transform>().localScale.x;
                 containerHeight = GetComponent<Transform>().localScale.y;
+                containerX = GetComponent<Transform>().position.x;
+                containerY = GetComponent<Transform>().position.y;
                 break;
             default:
                 containerWidth = GetComponent<Transform>().localScale.x;
                 containerHeight = GetComponent<Transform>().localScale.y;
+                containerX = containerY = 0;
                 break;
         }
 
@@ -78,11 +84,11 @@ public class CardArranger : MonoBehaviour
 
         // Instantiate and position the cards
 
-        float currentY = 2 * verticalMargin - containerHeight / 2 + maxCardHeight / 2;
+        float currentY = containerY + 2 * verticalMargin - containerHeight / 2 + maxCardHeight / 2;
         int cardIndex = 0;
         for (int i = 0; i < rows; i++)
         {
-            float currentX = 2 * horizontalMargin - containerWidth / 2 + maxCardWidth / 2;
+            float currentX = containerX + 2 * horizontalMargin - containerWidth / 2 + maxCardWidth / 2;
             for (int j = 0; j < columns; j++)
             {
                 Vector3 position = new Vector3(currentX,currentY,0);
