@@ -16,6 +16,9 @@ public class Card : MonoBehaviour
 
     public float revealDuration = 0.5f; // Duration of the reveal animation in seconds
     public float hideDuration = 0.5f;   // Duration of the hide animation in seconds
+    public float matchAnimationDuration = 0.1f; // Duration of the reveal animation in seconds
+    public float matchAnimationScale = 1.1f;   // Duration of the hide animation in seconds
+
 
     public int cardID = -1;
     private CardState currentState = CardState.Hidden;
@@ -81,6 +84,28 @@ public class Card : MonoBehaviour
         {
             currentState = CardState.Hidden;
         }
+    }
+
+    public IEnumerator AnimateMatch()
+    {
+        Vector3 originalScale = GetComponent<Transform>().localScale;
+        float timeElapsed = 0.0f;
+        while (timeElapsed < matchAnimationDuration)
+        {
+            transform.localScale = Vector3.Lerp(originalScale, matchAnimationScale * originalScale, timeElapsed / matchAnimationDuration);
+            timeElapsed += Time.deltaTime;
+            yield return null;
+        }
+
+        timeElapsed = 0.0f;
+        while (timeElapsed < matchAnimationDuration)
+        {
+            transform.localScale = Vector3.Lerp(matchAnimationScale * originalScale, originalScale, timeElapsed / matchAnimationDuration);
+            timeElapsed += Time.deltaTime;
+            yield return null;
+        }
+        transform.localScale = originalScale;
+        yield return null;
     }
 
     private void HandleClick()

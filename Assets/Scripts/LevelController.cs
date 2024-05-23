@@ -86,7 +86,6 @@ public class LevelController : MonoBehaviour
 
     public void HandleCardReveal(Card card)
     {
-        print(card.cardID);
         selectedCards.Enqueue(card);
         ProcessQueue();
     }
@@ -117,6 +116,8 @@ public class LevelController : MonoBehaviour
 
             if(firstCard.cardID == secondCard.cardID)
             {
+                StartCoroutine(firstCard.AnimateMatch());
+                StartCoroutine(secondCard.AnimateMatch());
                 Match();
             } else
             {
