@@ -45,6 +45,7 @@ public class Card : MonoBehaviour
 
         currentState = CardState.Revealing;
         StartCoroutine(AnimateRotation(revealDuration, revealedRotation));
+        SoundController.Instance.PlaySoundEffect("flipping");
     }
 
     public void Hide()

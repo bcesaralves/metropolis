@@ -106,9 +106,9 @@ public class LevelController : MonoBehaviour
                 Match();
             } else
             {
-                sequence = 0;
                 firstCard.Hide();
                 secondCard.Hide();
+                Fail();
             }
         }
     }
@@ -126,7 +126,14 @@ public class LevelController : MonoBehaviour
             UpdateScore(scorePerMatch, 0);
         }
         unrevealedCards -= 2;
+        SoundController.Instance.PlaySoundEffect("matching");
         CheckEndLevel();
+    }
+
+    private void Fail()
+    {
+        sequence = 0;
+        SoundController.Instance.PlaySoundEffect("mismatching");
     }
 
 
