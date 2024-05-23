@@ -1061,15 +1061,18 @@ MonoBehaviour:
   - level: 1
     horizontalNumberOfCards: 2
     verticalNumberOfCards: 2
-    type: 0
+    totalTime: 10
+    type: 1
   - level: 2
     horizontalNumberOfCards: 4
     verticalNumberOfCards: 3
-    type: 0
+    totalTime: 20
+    type: 1
   - level: 3
     horizontalNumberOfCards: 6
     verticalNumberOfCards: 4
-    type: 0
+    totalTime: 30
+    type: 1
 --- !u!4 &1670731794
 Transform:
   m_ObjectHideFlags: 0
@@ -1300,7 +1303,7 @@ GameObject:
   - component: {fileID: 2135294711}
   - component: {fileID: 2135294709}
   m_Layer: 0
-  m_Name: AudioController
+  m_Name: SoundController
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

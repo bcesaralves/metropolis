@@ -82,8 +82,9 @@ public class GameController : MonoBehaviour
 
     public void GameOver()
     {
-        currentState = GameState.GameOver;
-        SceneManager.LoadScene("GameOver");
+        SoundController.Instance.PlaySoundEffect("gameover");
+        currentState = GameState.MainMenu;
+        SceneManager.LoadScene("MainMenu");
     }
 
     public void RestartGame()

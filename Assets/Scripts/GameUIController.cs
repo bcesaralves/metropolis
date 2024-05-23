@@ -20,7 +20,7 @@ public class GameUIController : MonoBehaviour
     {
         if(scoreText)
         {
-            scoreText.text = "Score " + score.ToString();
+            scoreText.text = "Score: " + score.ToString();
         }
     }
 
@@ -28,7 +28,7 @@ public class GameUIController : MonoBehaviour
     {
         if (levelText)
         {
-            levelText.text = "Next Level " + level.ToString();
+            levelText.text = "Next Level: " + level.ToString();
         }
     }
 

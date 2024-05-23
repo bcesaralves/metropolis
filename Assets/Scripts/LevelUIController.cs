@@ -6,6 +6,7 @@ public class LevelUIController : MonoBehaviour
     public TMP_Text scoreText;
     public TMP_Text comboScoreText;
     public TMP_Text levelText;
+    public TMP_Text timerText;
 
     private void Awake()
     {
@@ -14,6 +15,7 @@ public class LevelUIController : MonoBehaviour
         {
             levelController.OnScoreChanged += OnScoreChanged;
             levelController.OnComboScoreChanged += OnComboScoreChanged;
+            levelController.OnTimeChanged += OnTimeChanged;
         }
     }
 
@@ -24,7 +26,7 @@ public class LevelUIController : MonoBehaviour
         {
             if (levelText)
             {
-                levelText.text = "Level " + levelController.GetLevel().ToString();
+                levelText.text = "Level: " + levelController.GetLevel().ToString();
             }
         }
     }
@@ -33,7 +35,7 @@ public class LevelUIController : MonoBehaviour
     {
         if (scoreText)
         {
-            scoreText.text = "Level Score " + score.ToString();
+            scoreText.text = "Level Score: " + score.ToString();
         }
     }
 
@@ -41,7 +43,15 @@ public class LevelUIController : MonoBehaviour
     {
         if (comboScoreText)
         {
-            comboScoreText.text = "Combo Score " + combo.ToString();
+            comboScoreText.text = "Combo Score: " + combo.ToString();
+        }
+    }
+
+    public void OnTimeChanged(int remainingTime)
+    {
+        if (timerText)
+        {
+            timerText.text = "Remaining Time: " + remainingTime.ToString();
         }
     }
 
@@ -50,6 +60,8 @@ public class LevelUIController : MonoBehaviour
         if (LevelController.instance)
         {
             LevelController.instance.GetComponent<LevelController>().OnScoreChanged -= OnScoreChanged;
+            LevelController.instance.GetComponent<LevelController>().OnComboScoreChanged -= OnComboScoreChanged;
+            LevelController.instance.GetComponent<LevelController>().OnTimeChanged -= OnTimeChanged;
         }
     }
 }

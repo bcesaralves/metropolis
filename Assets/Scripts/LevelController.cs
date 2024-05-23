@@ -15,9 +15,11 @@ public class LevelController : MonoBehaviour
     private int unrevealedCards;
     public Action<int> OnScoreChanged;
     public Action<int> OnComboScoreChanged;
+    public Action<int> OnTimeChanged;
     private int score;
     private int combo;
     private int sequence;
+    private float currentTime = 0;
 
     void Awake()
     {
@@ -52,6 +54,7 @@ public class LevelController : MonoBehaviour
             levelParams.level = 1;
             levelParams.horizontalNumberOfCards = 4;
             levelParams.verticalNumberOfCards = 2;
+            levelParams.totalTime = 10;
             levelParams.type = CardArranger.ArrangeType.Screen;
         }
         unrevealedCards = levelParams.horizontalNumberOfCards * levelParams.verticalNumberOfCards;
@@ -63,6 +66,17 @@ public class LevelController : MonoBehaviour
         
         arranger.Arrange(levelParams.type,levelParams.verticalNumberOfCards,levelParams.horizontalNumberOfCards);
 
+    }
+
+    private void Update()
+    {
+        currentTime += Time.deltaTime;
+        OnTimeChanged?.Invoke(Mathf.RoundToInt(levelParams.totalTime - currentTime));
+
+        if (currentTime >= levelParams.totalTime)
+        {
+            GameController.instance.GameOver();
+        }
     }
 
     public int GetLevel()
