@@ -7,26 +7,26 @@ public class LevelUIController : MonoBehaviour
     public TMP_Text comboScoreText;
     public TMP_Text levelText;
     public TMP_Text timerText;
+    private LevelController _levelController;
 
     private void Awake()
     {
-        LevelController levelController = LevelController.instance.GetComponent<LevelController>();
-        if (levelController != null)
+        if(LevelController.instance)
         {
-            levelController.OnScoreChanged += OnScoreChanged;
-            levelController.OnComboScoreChanged += OnComboScoreChanged;
-            levelController.OnTimeChanged += OnTimeChanged;
+            _levelController = LevelController.instance.GetComponent<LevelController>();
+            _levelController.OnScoreChanged += OnScoreChanged;
+            _levelController.OnComboScoreChanged += OnComboScoreChanged;
+            _levelController.OnTimeChanged += OnTimeChanged;
         }
     }
 
     private void Start()
     {
-        LevelController levelController = LevelController.instance.GetComponent<LevelController>();
-        if (levelController != null)
+        if (_levelController != null)
         {
             if (levelText)
             {
-                levelText.text = "Level: " + levelController.GetLevel().ToString();
+                levelText.text = "Level: " + _levelController.GetLevel().ToString();
             }
         }
     }
@@ -57,11 +57,11 @@ public class LevelUIController : MonoBehaviour
 
     void OnDestroy()
     {
-        if (LevelController.instance)
+        if (_levelController)
         {
-            LevelController.instance.GetComponent<LevelController>().OnScoreChanged -= OnScoreChanged;
-            LevelController.instance.GetComponent<LevelController>().OnComboScoreChanged -= OnComboScoreChanged;
-            LevelController.instance.GetComponent<LevelController>().OnTimeChanged -= OnTimeChanged;
+            _levelController.OnScoreChanged -= OnScoreChanged;
+            _levelController.OnComboScoreChanged -= OnComboScoreChanged;
+            _levelController.OnTimeChanged -= OnTimeChanged;
         }
     }
 }

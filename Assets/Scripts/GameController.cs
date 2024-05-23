@@ -16,6 +16,7 @@ public class GameController : MonoBehaviour
     private GameProgress progress;
     public Action<int> OnScoreChanged;
     public Action<int> OnLevelChanged;
+    private float cardsAspectRatio;
 
     void Awake()
     {
@@ -29,6 +30,9 @@ public class GameController : MonoBehaviour
             Destroy(gameObject);
         }
         DontDestroyOnLoad(gameObject);
+        
+        var renderer = cards[0].GetComponent<SpriteRenderer>();
+        cardsAspectRatio = renderer.bounds.size.x / renderer.bounds.size.y;
     }
 
     void Start()
@@ -144,7 +148,7 @@ public class GameController : MonoBehaviour
 
     public float GetCardsAspectRatio()
     {
-        return cards[0].GetComponent<SpriteRenderer>().bounds.size.x / cards[0].GetComponent<SpriteRenderer>().bounds.size.y; ;
+        return cardsAspectRatio;
     }
 
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)

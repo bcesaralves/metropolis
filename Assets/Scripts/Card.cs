@@ -25,9 +25,16 @@ public class Card : MonoBehaviour
     private Quaternion hiddenRotation = Quaternion.Euler(0f, 180f, 0f);
     private Quaternion revealedRotation = Quaternion.Euler(0f, 0f, 0f);
 
+    private ClickableObject _clickableObject;
+    private SpriteRenderer _spriteRenderer;
+    private Transform _transform;
+
     private void Awake()
     {
-        GetComponent<ClickableObject>().OnClick += HandleClick;
+        _clickableObject = GetComponent<ClickableObject>();
+        _spriteRenderer = GetComponent<SpriteRenderer>();
+        _transform = GetComponent<Transform>();
+        _clickableObject.OnClick += HandleClick;
     }
 
     private void Start()
@@ -58,7 +65,7 @@ public class Card : MonoBehaviour
         if (currentState != CardState.Revealed)
             return;
 
-        GetComponent<SpriteRenderer>().enabled = true;
+        _spriteRenderer.enabled = true;
 
         currentState = CardState.Hiding;
         StartCoroutine(AnimateRotation(hideDuration, hiddenRotation));
@@ -81,7 +88,7 @@ public class Card : MonoBehaviour
 
         if (targetRotation == revealedRotation)
         {
-            GetComponent<SpriteRenderer>().enabled = false;
+            _spriteRenderer.enabled = false;
             currentState = CardState.Revealed;
             OnRevealed?.Invoke(this);
         }
@@ -94,7 +101,7 @@ public class Card : MonoBehaviour
 
     public IEnumerator AnimateMatch()
     {
-        Vector3 originalScale = GetComponent<Transform>().localScale;
+        Vector3 originalScale = _transform.localScale;
         float timeElapsed = 0.0f;
         while (timeElapsed < matchAnimationDuration)
         {
@@ -121,6 +128,6 @@ public class Card : MonoBehaviour
 
     void OnDestroy()
     {
-        GetComponent<ClickableObject>().OnClick -= HandleClick;
+        _clickableObject.OnClick -= HandleClick;
     }
 }

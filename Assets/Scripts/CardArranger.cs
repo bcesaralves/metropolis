@@ -7,10 +7,12 @@ public class CardArranger : MonoBehaviour
     public float verticalMargin; // Vertical margin between cards
     public enum ArrangeType { Screen, Container};
     private List<Card> cards;
+    private Transform _transform;
 
     private void Awake()
     {
         cards = new List<Card>();
+        _transform = GetComponent<Transform>();
     }
 
     public void Arrange(ArrangeType type, int rows, int columns)
@@ -49,14 +51,14 @@ public class CardArranger : MonoBehaviour
                 containerX = containerY = 0;
                 break;
             case ArrangeType.Container:
-                containerWidth = GetComponent<Transform>().localScale.x;
-                containerHeight = GetComponent<Transform>().localScale.y;
-                containerX = GetComponent<Transform>().position.x;
-                containerY = GetComponent<Transform>().position.y;
+                containerWidth = _transform.localScale.x;
+                containerHeight = _transform.localScale.y;
+                containerX = _transform.position.x;
+                containerY = _transform.position.y;
                 break;
             default:
-                containerWidth = GetComponent<Transform>().localScale.x;
-                containerHeight = GetComponent<Transform>().localScale.y;
+                containerWidth = _transform.localScale.x;
+                containerHeight = _transform.localScale.y;
                 containerX = containerY = 0;
                 break;
         }
@@ -104,11 +106,13 @@ public class CardArranger : MonoBehaviour
                     continue;
                 }
                 GameObject card = Instantiate(cardPrefab, transform.parent);
-                card.GetComponent<Transform>().localScale = new Vector3(cardWidth, cardHeight, 1);
-                card.GetComponent<Transform>().localPosition = position;
-                card.GetComponent<Card>().OnRevealed += LevelController.instance.HandleCardReveal;
-                card.GetComponent<Card>().SetCardID(cardsIDs[cardIndex]);
-                cards.Add(card.GetComponent<Card>());
+                Transform cardTransform = card.GetComponent<Transform>();
+                Card cardComponent = card.GetComponent<Card>();
+                cardTransform.localScale = new Vector3(cardWidth, cardHeight, 1);
+                cardTransform.localPosition = position;
+                cardComponent.OnRevealed += LevelController.instance.HandleCardReveal;
+                cardComponent.SetCardID(cardsIDs[cardIndex]);
+                cards.Add(cardComponent);
                 cardIndex++;
                 currentX += maxCardWidth + 2 * horizontalMargin;
             }
