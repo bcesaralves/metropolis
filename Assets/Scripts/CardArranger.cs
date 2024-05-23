@@ -3,7 +3,6 @@ using UnityEngine;
 
 public class CardArranger : MonoBehaviour
 {
-    public GameObject cardPrefab; // The card prefab to instantiate
     public float horizontalMargin; // Horizontal margin between cards
     public float verticalMargin; // Vertical margin between cards
     public enum ArrangeType { Screen, Container};
@@ -16,13 +15,10 @@ public class CardArranger : MonoBehaviour
 
     public void Arrange(ArrangeType type, int rows, int columns)
     {
-        if (cardPrefab == null)
-        {
-            Debug.LogError("Card prefab is not assigned.");
-            return;
-        }
+
 
         //TODO: check if is even
+        GameController gameController = GameController.instance.GetComponent<GameController>();
 
         List<int> cardsIDs = new List<int>();
         for (int i = 1; i <= rows * columns / 2; i++)
@@ -65,7 +61,7 @@ public class CardArranger : MonoBehaviour
         float maxCardWidth = (containerWidth - totalHorizontalMargin) / columns;
         float maxCardHeight = (containerHeight - totalVerticalMargin) / rows;
 
-        float cardAspectRatio = cardPrefab.GetComponent<SpriteRenderer>().bounds.size.x / cardPrefab.GetComponent<SpriteRenderer>().bounds.size.y;
+        float cardAspectRatio = gameController.GetCardsAspectRatio();
 
         // Adjust the card size to maintain the aspect ratio
         float cardWidth, cardHeight;
@@ -91,6 +87,12 @@ public class CardArranger : MonoBehaviour
             {
                 Vector3 position = new Vector3(currentX,currentY,0);
 
+                GameObject cardPrefab = gameController.GetCard(cardsIDs[cardIndex]);
+                if (cardPrefab == null)
+                {
+                    Debug.LogError("Card prefab is not correctly assigned.");
+                    continue;
+                }
                 GameObject card = Instantiate(cardPrefab, transform.parent);
                 card.GetComponent<Transform>().localScale = new Vector3(cardWidth, cardHeight, 1);
                 card.GetComponent<Transform>().localPosition = position;

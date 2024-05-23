@@ -11,6 +11,7 @@ public class GameController : MonoBehaviour
     public enum GameState { MainMenu, Playing, GameOver };
     public GameState currentState = GameState.MainMenu;
     public List<LevelParameters> levels;
+    public List<GameObject> cards;
     private string saveFilePath;
     private GameProgress progress;
     public Action<int> OnScoreChanged;
@@ -130,6 +131,20 @@ public class GameController : MonoBehaviour
             progress.score += progressChange.score;
             OnScoreChanged?.Invoke(progress.score);
         }
+    }
+
+    public GameObject GetCard(int index)
+    {
+        if(index > cards.Count)
+        {
+            Debug.LogError("Invalid card index " + index);
+        }
+        return cards[index - 1];
+    }
+
+    public float GetCardsAspectRatio()
+    {
+        return cards[0].GetComponent<SpriteRenderer>().bounds.size.x / cards[0].GetComponent<SpriteRenderer>().bounds.size.y; ;
     }
 
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)

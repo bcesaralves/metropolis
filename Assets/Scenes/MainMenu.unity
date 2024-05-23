@@ -1065,14 +1065,21 @@ MonoBehaviour:
     type: 1
   - level: 2
     horizontalNumberOfCards: 4
-    verticalNumberOfCards: 3
+    verticalNumberOfCards: 2
     totalTime: 20
     type: 1
   - level: 3
-    horizontalNumberOfCards: 6
-    verticalNumberOfCards: 4
+    horizontalNumberOfCards: 4
+    verticalNumberOfCards: 3
     totalTime: 30
     type: 1
+  cards:
+  - {fileID: 7932124519058140591, guid: 8ffc5f12300824cca99eb4f094914b66, type: 3}
+  - {fileID: 3947277035035593065, guid: 057816ccb68d94c9aacd9c4fac89dbaf, type: 3}
+  - {fileID: 5025871469001296442, guid: 3135fad5c7f1e4aaeb0c97481a8dfb90, type: 3}
+  - {fileID: 862192408209921702, guid: 5250b7c97f9f349f9be1116e23926a2c, type: 3}
+  - {fileID: 154742599778366146, guid: 4af75c0420fcc4592ac4a0e377c0fb16, type: 3}
+  - {fileID: 2487389896466052875, guid: ded3c1620ae98451b89e3127f4d22505, type: 3}
 --- !u!4 &1670731794
 Transform:
   m_ObjectHideFlags: 0
