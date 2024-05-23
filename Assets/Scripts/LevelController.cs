@@ -129,11 +129,6 @@ public class LevelController : MonoBehaviour
         CheckEndLevel();
     }
 
-    private void Fail()
-    {
-
-    }
-
 
     private void CheckEndLevel()
     {
