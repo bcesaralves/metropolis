@@ -18,7 +18,7 @@ public class Card : MonoBehaviour
     public float hideDuration = 0.5f;   // Duration of the hide animation in seconds
     public float matchAnimationDuration = 0.1f; // Duration of the reveal animation in seconds
     public float matchAnimationScale = 1.1f;   // Duration of the hide animation in seconds
-
+    public SpriteRenderer front;
 
     public int cardID = -1;
     private CardState currentState = CardState.Hidden;
@@ -46,6 +46,8 @@ public class Card : MonoBehaviour
         if (currentState != CardState.Hidden)
             return;
 
+        front.enabled = true;
+
         currentState = CardState.Revealing;
         StartCoroutine(AnimateRotation(revealDuration, revealedRotation));
         SoundController.Instance.PlaySoundEffect("flipping");
@@ -55,6 +57,8 @@ public class Card : MonoBehaviour
     {
         if (currentState != CardState.Revealed)
             return;
+
+        GetComponent<SpriteRenderer>().enabled = true;
 
         currentState = CardState.Hiding;
         StartCoroutine(AnimateRotation(hideDuration, hiddenRotation));
@@ -77,11 +81,13 @@ public class Card : MonoBehaviour
 
         if (targetRotation == revealedRotation)
         {
+            GetComponent<SpriteRenderer>().enabled = false;
             currentState = CardState.Revealed;
             OnRevealed?.Invoke(this);
         }
         else if (targetRotation == hiddenRotation)
         {
+            front.enabled = false;
             currentState = CardState.Hidden;
         }
     }
