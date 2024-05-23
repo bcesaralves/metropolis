@@ -60,7 +60,7 @@ public class LevelController : MonoBehaviour
         unrevealedCards = levelParams.horizontalNumberOfCards * levelParams.verticalNumberOfCards;
         if (unrevealedCards % 2 != 0)
         {
-            Debug.LogError("Number of cards must be even");
+            Debug.LogError("Number of cards must be even.");
             return;
         }
         

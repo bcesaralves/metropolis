@@ -16,8 +16,12 @@ public class CardArranger : MonoBehaviour
     public void Arrange(ArrangeType type, int rows, int columns)
     {
 
-
-        //TODO: check if is even
+        if(rows * columns %  2 != 0)
+        {
+            Debug.LogError("Number of cards must by even.");
+            return;
+        }
+        
         GameController gameController = GameController.instance.GetComponent<GameController>();
 
         List<int> cardsIDs = new List<int>();
