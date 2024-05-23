@@ -1073,6 +1073,11 @@ MonoBehaviour:
     verticalNumberOfCards: 3
     totalTime: 30
     type: 1
+  - level: 4
+    horizontalNumberOfCards: 4
+    verticalNumberOfCards: 3
+    totalTime: 20
+    type: 1
   cards:
   - {fileID: 7932124519058140591, guid: 8ffc5f12300824cca99eb4f094914b66, type: 3}
   - {fileID: 3947277035035593065, guid: 057816ccb68d94c9aacd9c4fac89dbaf, type: 3}
